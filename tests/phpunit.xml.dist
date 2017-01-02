@@ -1,0 +1,20 @@
+<phpunit
+  colors="true"
+  bootstrap="../vendor/autoload.php"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  beStrictAboutTestsThatDoNotTestAnything="true"
+  beStrictAboutOutputDuringTests="true"
+  beStrictAboutTestSize="true"
+  >
+  <testsuite name="sabre-cache">
+    <directory>.</directory>
+  </testsuite>
+
+  <filter>
+    <whitelist addUncoveredFilesFromWhitelist="true">
+        <directory suffix=".php">../lib/</directory>
+   </whitelist>
+  </filter>
+</phpunit>

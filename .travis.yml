@@ -1,0 +1,13 @@
+language: php
+php:
+  - 7
+  - 7.1
+
+matrix:
+  fast_finish: true
+
+script:
+  - ./bin/phpunit --configuration tests/phpunit.xml.dist
+  - ./bin/sabre-cs-fixer fix lib/ --dry-run --diff
+
+before_script: composer install

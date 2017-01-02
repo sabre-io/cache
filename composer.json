@@ -1,0 +1,44 @@
+{
+    "name": "sabre/cache",
+    "description": "Simple cache abstraction layer implementing PSR-16",
+    "keywords": [
+        "sabre",
+        "cache",
+        "simple-cache",
+        "psr-16",
+        "apcu",
+        "apc",
+        "memcache",
+        "memcached"
+    ],
+    "homepage": "http://sabre.io/dav/",
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=7.0",
+        "psr/simple-cache": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Evert Pot",
+            "email": "me@evertpot.com",
+            "homepage": "https://evertpot.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "forum": "https://groups.google.com/group/sabredav-discuss",
+        "source": "https://github.com/fruux/sabre-skel"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Sabre\\Skel\\" : "lib/"
+        }
+    },
+    "require-dev": {
+        "sabre/cs": "~1.0.0",
+        "phpunit/phpunit" : "*"
+    },
+    "config" : {
+        "bin-dir" : "bin/"
+    }
+}
