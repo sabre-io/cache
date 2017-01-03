@@ -10,4 +10,6 @@ script:
   - ./bin/phpunit --verbose --configuration tests/phpunit.xml.dist
   - ./bin/sabre-cs-fixer fix lib/ --dry-run --diff
 
-before_script: composer install
+before_script:
+  - pecl install apcu
+  - composer install
