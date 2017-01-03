@@ -3,8 +3,16 @@ php:
   - 7
   - 7.1
 
+env:
+  global:
+    - MEMCACHED_SERVER=127.0.0.1
+
+
 matrix:
   fast_finish: true
+
+services:
+  - memcached
 
 script:
   - ./bin/phpunit --verbose --configuration tests/phpunit.xml.dist
