@@ -11,5 +11,5 @@ script:
   - ./bin/sabre-cs-fixer fix lib/ --dry-run --diff
 
 before_script:
-  - pecl install apcu
+  - pecl install -f apcu
   - composer install
