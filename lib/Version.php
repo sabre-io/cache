@@ -6,7 +6,7 @@ namespace Sabre\Cache;
  * This class contains the version number for sabre/cache 
  *
  * @copyright Copyright (C) fruux GmbH (https://fruux.com/)
- * @author Evert Pot (http://evertpot.com/)
+ * @author Evert Pot (https://evertpot.com/)
  * @license http://sabre.io/license/
  */
 class Version {

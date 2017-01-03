@@ -31,7 +31,12 @@
     },
     "autoload": {
         "psr-4" : {
-            "Sabre\\Skel\\" : "lib/"
+            "Sabre\\Cache\\" : "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4" : {
+            "Sabre\\Cache\\" : "test/"
         }
     },
     "require-dev": {
