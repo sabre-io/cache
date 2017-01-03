@@ -5,6 +5,7 @@ namespace Sabre\Cache;
 use DateInterval;
 use DateTime;
 use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * The Memory cache just stores everything in PHP memory. This cache is gone
