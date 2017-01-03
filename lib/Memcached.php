@@ -164,13 +164,13 @@ class Memcached implements CacheInterface {
     function getMultiple($keys, $default = null) {
 
         if ($keys instanceof Traversable) {
-            $keys = iterator_to_array($key);
+            $keys = iterator_to_array($keys);
         } elseif (!is_array($keys)) {
             throw new InvalidArgumentException('$keys must be iterable');
         }
 
         $result = $this->memcached->getMulti($keys);
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             if (!isset($result[$key])) {
                 $result[$key] = $default;
             }

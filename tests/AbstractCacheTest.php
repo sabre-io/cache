@@ -146,6 +146,16 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @depends testHas
+     */
+    function testHasNot() {
+
+        $cache = $this->getCache();
+        $this->assertFalse($cache->has('not-found'));
+
+    }
+
+    /**
      * @expectedException \Psr\SimpleCache\InvalidArgumentException
      */
     function testHasInvalidArg() {
@@ -214,6 +224,39 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @depends testSetGet
+     */
+    function testSetGetMultipleGenerator2() {
+
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $gen = function() use ($values) {
+            foreach ($values as $key => $value) {
+                yield $key;
+            }
+        };
+
+        $cache = $this->getCache();
+        $cache->setMultiple($values);
+
+        $result = $cache->getMultiple($gen());
+        foreach ($result as $key => $value) {
+            $this->assertTrue(isset($values[$key]));
+            $this->assertEquals($values[$key], $value);
+            unset($values[$key]);
+        }
+
+        // The list of values should now be empty
+        $this->assertEquals([], $values);
+
+    }
+
+
+    /**
      * @depends testSetGetMultiple
      * @depends testSetExpire
      * @slow
@@ -258,6 +301,45 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
 
         $cache = $this->getCache();
         $cache->setMultiple($values, new \DateInterval('PT1S'));
+
+        // Wait 2 seconds so the cache expires
+        sleep(2);
+
+        $result = $cache->getMultiple(array_keys($values), 'not-found');
+        $count = 0;
+
+        $expected = [
+            'key1' => 'not-found',
+            'key2' => 'not-found',
+            'key3' => 'not-found',
+        ];
+
+        foreach ($result as $key => $value) {
+            $count++;
+            $this->assertTrue(isset($expected[$key]));
+            $this->assertEquals($expected[$key], $value);
+            unset($expected[$key]);
+        }
+        $this->assertEquals(3, $count);
+
+        // The list of values should now be empty
+        $this->assertEquals([], $expected);
+
+    }
+
+    /**
+     * @slow
+     */
+    function testSetMultipleExpireDateIntervalInt() {
+
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $cache = $this->getCache();
+        $cache->setMultiple($values, 1);
 
         // Wait 2 seconds so the cache expires
         sleep(2);

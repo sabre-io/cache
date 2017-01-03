@@ -3,7 +3,6 @@
 namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
-use Traversable;
 
 class MemcachedTest extends AbstractCacheTest {
 
