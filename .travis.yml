@@ -20,6 +20,7 @@ script:
 
 before_script:
   - yes '' | pecl install -f apcu
+  - yes '' | pecl install -f memcached
   - echo "apc.enable_cli=1" > sabrecache.ini
   - phpenv config-add sabrecache.ini
   - composer install
