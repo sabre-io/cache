@@ -39,6 +39,9 @@
             "Sabre\\Cache\\" : "test/"
         }
     },
+    "provides": {
+        "psr/simple-cache-implementation": "~1.0"
+    },
     "require-dev": {
         "sabre/cs": "~1.0.0",
         "phpunit/phpunit" : "*"
