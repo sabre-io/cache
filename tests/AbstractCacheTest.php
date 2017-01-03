@@ -427,6 +427,46 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @depends testSetGetMultiple
+     */
+    function testDeleteMultipleGenerator() {
+
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $cache = $this->getCache();
+        $cache->setMultiple($values);
+
+        $gen = function() {
+            yield 'key1';
+            yield 'key3';
+        };
+
+        $cache->deleteMultiple($gen());
+
+        $result = $cache->getMultiple(array_keys($values), 'tea');
+
+        $expected = [
+            'key1' => 'tea',
+            'key2' => 'value2',
+            'key3' => 'tea',
+        ];
+
+        foreach ($result as $key => $value) {
+            $this->assertTrue(isset($expected[$key]));
+            $this->assertEquals($expected[$key], $value);
+            unset($expected[$key]);
+        }
+
+        // The list of values should now be empty
+        $this->assertEquals([], $expected);
+
+    }
+
+    /**
      * @expectedException \Psr\SimpleCache\InvalidArgumentException
      */
     function testDeleteMultipleInvalidArg() {

@@ -230,7 +230,7 @@ class Memcached implements CacheInterface {
     function deleteMultiple($keys) {
 
         if ($keys instanceof Traversable) {
-            $keys = iterator_to_array($key);
+            $keys = iterator_to_array($keys);
         } elseif (!is_array($keys)) {
             throw new InvalidArgumentException('$keys must be iterable');
         }

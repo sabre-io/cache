@@ -172,8 +172,10 @@ class Apcu implements CacheInterface {
      */
     function deleteMultiple($keys) {
 
-        if (!is_array($keys) && !$keys instanceof Traversable) {
-            throw new InvalidArgumentException('$keys must be traversable');
+        if ($keys instanceof Traversable) {
+            $keys = iterator_to_array($keys);
+        } elseif (!is_array($keys)) {
+            throw new InvalidArgumentException('$keys must be iterable');
         }
 
         return apcu_delete($keys);
