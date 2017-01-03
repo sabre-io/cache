@@ -34,8 +34,8 @@ trait MultipleTrait {
      */
     function getMultiple($keys, $default = null) {
 
-        if (!is_array($keys) || !$keys instanceof Traversable) {
-            throw new InvalidArgumentException('$key must be traversable');
+        if (!is_array($keys) && !$keys instanceof Traversable) {
+            throw new InvalidArgumentException('$keys must be traversable');
         }
 
         foreach ($keys as $key) {
@@ -64,8 +64,8 @@ trait MultipleTrait {
      */
     function setMultiple($values, $ttl = null) {
 
-        if (!is_array($keys) || !$keys instanceof Traversable) {
-            throw new InvalidArgumentException('$key must be traversable');
+        if (!is_array($values) && !$values instanceof Traversable) {
+            throw new InvalidArgumentException('$values must be traversable');
         }
 
         $result = true;
@@ -92,12 +92,12 @@ trait MultipleTrait {
      */
     function deleteMultiple($keys) {
 
-        if (!is_array($keys) || !$keys instanceof Traversable) {
-            throw new InvalidArgumentException('$key must be traversable');
+        if (!is_array($keys) && !$keys instanceof Traversable) {
+            throw new InvalidArgumentException('$keys must be traversable');
         }
 
         $result = true;
-        foreach ($$keys as $key) {
+        foreach ($keys as $key) {
             if (!$this->delete($key)) {
                 $result = false;
             }

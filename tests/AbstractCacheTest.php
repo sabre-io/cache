@@ -46,7 +46,32 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @depends testDelete
+     */
+    function testGetNotFound() {
+
+        $cache = $this->getCache();
+        $this->assertNull($cache->get('notfound'));
+
+    }
+
+    /**
+     * @depends testDelete
+     */
+    function testGetNotFoundDefault() {
+
+        $cache = $this->getCache();
+        $default = 'chickpeas';
+        $this->assertEquals(
+            $default,
+            $cache->get('notfound', $default)
+        );
+
+    }
+
+    /**
      * @depends testSetGet
+     * @slow
      */
     function testSetExpire() {
 
@@ -62,6 +87,7 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @depends testSetGet
+     * @slow
      */
     function testSetExpireDTInterval() {
 
@@ -119,4 +145,99 @@ abstract class AbstractCacheTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    /**
+     * @expectedException \Psr\SimpleCache\InvalidArgumentException
+     */
+    function testHasInvalidArg() {
+
+        $cache = $this->getCache();
+        $cache->has(null);
+
+    }
+
+    /**
+     * @depends testSetGet
+     */
+    function testSetGetMultiple() {
+
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $cache = $this->getCache();
+        $cache->setMultiple($values);
+
+        $result = $cache->getMultiple(array_keys($values));
+        foreach ($result as $key => $value) {
+            $this->assertTrue(isset($values[$key]));
+            $this->assertEquals($values[$key], $value);
+            unset($values[$key]);
+        }
+
+        // The list of values should now be empty
+        $this->assertEquals([], $values);
+
+    }
+
+    /**
+     * @expectedException \Psr\SimpleCache\InvalidArgumentException
+     */
+    function testSetMultipleInvalidArg() {
+
+        $cache = $this->getCache();
+        $cache->setMultiple(null);
+
+    }
+
+    /**
+     * @expectedException \Psr\SimpleCache\InvalidArgumentException
+     */
+    function testGetMultipleInvalidArg() {
+
+        $cache = $this->getCache();
+        $result = $cache->getMultiple(null);
+        // If $result was a generator, the generator will only error once the
+        // first value is requested.
+        //
+        // This extra line is just a precaution for that
+        if ($result instanceof \Traversable) $result->current();
+
+    }
+
+    /**
+     * @depends testSetGetMultiple
+     */
+    function testDeleteMultipleDefaultGet() {
+
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $cache = $this->getCache();
+        $cache->setMultiple($values);
+
+        $cache->deleteMultiple(['key1', 'key3']);
+
+        $result = $cache->getMultiple(array_keys($values), 'tea');
+
+        $expected = [
+            'key1' => 'tea',
+            'key2' => 'value2',
+            'key3' => 'tea',
+        ];
+
+        foreach ($result as $key => $value) {
+            $this->assertTrue(isset($expected[$key]));
+            $this->assertEquals($expected[$key], $value);
+            unset($expected[$key]);
+        }
+
+        // The list of values should now be empty
+        $this->assertEquals([], $expected);
+
+    }
 }
