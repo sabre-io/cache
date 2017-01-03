@@ -7,7 +7,7 @@ matrix:
   fast_finish: true
 
 script:
-  - ./bin/phpunit --configuration tests/phpunit.xml.dist
+  - ./bin/phpunit --verbose --configuration tests/phpunit.xml.dist
   - ./bin/sabre-cs-fixer fix lib/ --dry-run --diff
 
 before_script: composer install
