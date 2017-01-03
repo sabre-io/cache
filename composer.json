@@ -17,6 +17,10 @@
         "php": ">=7.0",
         "psr/simple-cache": "^1.0"
     },
+    "suggest": {
+        "ext-apc": "*",
+        "ext-memcached": "*"
+    },
     "authors": [
         {
             "name": "Evert Pot",
