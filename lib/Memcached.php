@@ -5,6 +5,7 @@ namespace Sabre\Cache;
 use DateInterval;
 use DateTime;
 use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\InvalidArgumentException;
 use Traversable;
 
 /**
