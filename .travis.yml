@@ -1,12 +1,12 @@
 language: php
 php:
-  - 7
+  - 7.0
   - 7.1
+  - 7.2
 
 env:
   global:
     - MEMCACHED_SERVER=127.0.0.1
-
 
 matrix:
   fast_finish: true
