@@ -63,7 +63,7 @@ Build status
 
 | branch | status |
 | ------ | ------ |
-| master | [![Build Status](https://travis-ci.org/fruux/sabre-cache.svg?branch=master)](https://travis-ci.org/fruux/sabre-cache) |
+| master | [![Build Status](https://travis-ci.org/sabre-io/cache.svg?branch=master)](https://travis-ci.org/sabre-io/cache) |
 
 
 Questions?
