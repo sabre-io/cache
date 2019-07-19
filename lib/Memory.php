@@ -102,6 +102,7 @@ class Memory implements CacheInterface {
             throw new InvalidArgumentException('$key must be a string');
         }
         unset($this->cache[$key]);
+        return true;
 
     }
 
