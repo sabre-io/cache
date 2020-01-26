@@ -1,4 +1,6 @@
-<?php declare (strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sabre\Cache;
 
@@ -10,9 +12,7 @@ namespace Sabre\Cache;
  * @author Evert Pot (https://evertpot.com/)
  * @license http://sabre.io/license/
  */
-class InvalidArgumentException
-    extends \InvalidArgumentException // PHP built-in
+class InvalidArgumentException extends \InvalidArgumentException // PHP built-in
     implements \Psr\SimpleCache\InvalidArgumentException // PSR-16
 {
-
 }
