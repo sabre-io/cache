@@ -29,4 +29,4 @@ before_script:
 script:
   - ./bin/php-cs-fixer fix lib/ --dry-run --diff
   - ./bin/phpstan.phar analyse -c phpstan.neon lib
-  - ./bin/phpunit --verbose --configuration tests/phpunit.xml.dist
+  - ./bin/phpunit --verbose --configuration tests/phpunit.xml
