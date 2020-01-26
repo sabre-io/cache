@@ -1,8 +1,9 @@
 language: php
 php:
-  - 7
   - 7.1
   - 7.2
+  - 7.3
+  - 7.4
 
 env:
   global:
@@ -17,7 +18,7 @@ services:
 
 script:
   - ./bin/phpunit --verbose --configuration tests/phpunit.xml.dist
-  - ./bin/sabre-cs-fixer fix lib/ --dry-run --diff
+  - ./bin/php-cs-fixer fix lib/ --dry-run --diff
 
 before_script:
   - yes '' | pecl install -f apcu
