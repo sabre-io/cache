@@ -35,11 +35,9 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testGetInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->get(null);
 
@@ -101,22 +99,18 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testSetInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->set(null, 'bar');
 
     }
 
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testDeleteInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->delete(null);
 
@@ -155,11 +149,9 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testHasInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->has(null);
 
@@ -366,21 +358,17 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testSetMultipleInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->setMultiple(null);
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testGetMultipleInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $result = $cache->getMultiple(null);
         // If $result was a generator, the generator will only error once the
@@ -466,11 +454,9 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase {
 
     }
 
-    /**
-     * @expectedException \Psr\SimpleCache\InvalidArgumentException
-     */
     function testDeleteMultipleInvalidArg() {
 
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->deleteMultiple(null);
 
