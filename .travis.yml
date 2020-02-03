@@ -29,7 +29,6 @@ before_script:
   - echo "apc.enable_cli=1" > sabrecache.ini
   - echo "extension=memcached.so" >> sabrecache.ini
   - phpenv config-add sabrecache.ini
-  - composer install
 
 script:
   - if [ $RUN_PHPSTAN == "FALSE" ]; then php vendor/bin/php-cs-fixer fix --dry-run --diff; fi
