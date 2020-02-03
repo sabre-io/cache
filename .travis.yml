@@ -8,18 +8,23 @@ php:
 env:
   global:
     - MEMCACHED_SERVER=127.0.0.1
-
+    - RUN_PHPSTAN="FALSE"
+  matrix:
+    - PREFER_LOWEST="" WITH_COVERAGE="--coverage-clover=coverage.xml"
+    - PREFER_LOWEST="--prefer-lowest" $WITH_COVERAGE=""
 
 matrix:
+  include:
+    - name: 'PHPStan'
+      php: 7.4
+      env: RUN_PHPSTAN="TRUE"
   fast_finish: true
 
 services:
   - memcached
 
-install:
-  - composer require --dev phpstan/phpstan:^0.12
-
 before_script:
+  - composer update --prefer-source $PREFER_LOWEST
   - yes '' | pecl install -f apcu
   - echo "apc.enable_cli=1" > sabrecache.ini
   - echo "extension=memcached.so" >> sabrecache.ini
@@ -27,6 +32,9 @@ before_script:
   - composer install
 
 script:
-  - ./bin/php-cs-fixer fix lib/ --dry-run --diff
-  - ./bin/phpstan.phar analyse -c phpstan.neon lib
-  - ./bin/phpunit --verbose --configuration tests/phpunit.xml
+  - if [ $RUN_PHPSTAN == "FALSE" ]; then php vendor/bin/php-cs-fixer fix --dry-run --diff; fi
+  - if [ $RUN_PHPSTAN == "FALSE" ]; then php vendor/bin/phpunit --configuration tests/phpunit.xml $WITH_COVERAGE; fi
+  - if [ $RUN_PHPSTAN == "TRUE" ]; then php vendor/bin/phpstan analyse -c phpstan.neon lib tests; fi
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
