@@ -1,14 +1,16 @@
-<?php declare (strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 
-class ApcuTest extends AbstractCacheTest {
-
-    function getCache() : CacheInterface {
-
+class ApcuTest extends AbstractCacheTest
+{
+    public function getCache(): CacheInterface
+    {
         if (!function_exists('apcu_store')) {
             $this->markTestSkipped('Apcu extension is not loaded');
         }
@@ -16,12 +18,11 @@ class ApcuTest extends AbstractCacheTest {
             $this->markTestSkipped('apc.enabled is set to 0. Enable it via php.ini');
         }
 
-        if (php_sapi_name() === 'cli' && !ini_get('apc.enable_cli')) {
+        if ('cli' === php_sapi_name() && !ini_get('apc.enable_cli')) {
             $this->markTestSkipped('apc.enable_cli is set to 0. Enable it via php.ini');
         }
 
         return new Apcu();
-
     }
 
     /**
@@ -33,8 +34,8 @@ class ApcuTest extends AbstractCacheTest {
      *
      * So this test is not complete, but that's the best we can do.
      */
-    function testSetExpire() {
-
+    public function testSetExpire()
+    {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
         $this->assertEquals('bar', $cache->get('foo'));
@@ -42,7 +43,6 @@ class ApcuTest extends AbstractCacheTest {
         // Wait 2 seconds so the cache expires
         // usleep(2000000);
         // $this->assertNull($cache->get('foo'));
-
     }
 
     /**
@@ -54,8 +54,8 @@ class ApcuTest extends AbstractCacheTest {
      *
      * So this test is not complete, but that's the best we can do.
      */
-    function testSetExpireDateInterval() {
-
+    public function testSetExpireDateInterval()
+    {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
         $this->assertEquals('bar', $cache->get('foo'));
@@ -63,9 +63,7 @@ class ApcuTest extends AbstractCacheTest {
         // Wait 2 seconds so the cache expires
         // usleep(2000000);
         // $this->assertNull($cache->get('foo'));
-
     }
-
 
     /**
      * APC will only remove expired items from the cache during the next test,
@@ -76,8 +74,8 @@ class ApcuTest extends AbstractCacheTest {
      *
      * So this test is not complete, but that's the best we can do.
      */
-    function testSetMultipleExpireDateIntervalExpired() {
-
+    public function testSetMultipleExpireDateIntervalExpired()
+    {
         $values = [
             'key1' => 'value1',
             'key2' => 'value2',
@@ -110,7 +108,6 @@ class ApcuTest extends AbstractCacheTest {
 
         //// The list of values should now be empty
         //$this->assertEquals([], $expected);
-
     }
 
     /**
@@ -122,8 +119,8 @@ class ApcuTest extends AbstractCacheTest {
      *
      * So this test is not complete, but that's the best we can do.
      */
-    function testSetMultipleExpireDateIntervalInt() {
-
+    public function testSetMultipleExpireDateIntervalInt()
+    {
         $values = [
             'key1' => 'value1',
             'key2' => 'value2',
@@ -156,6 +153,5 @@ class ApcuTest extends AbstractCacheTest {
 
         //// The list of values should now be empty
         //$this->assertEquals([], $expected);
-
     }
 }
