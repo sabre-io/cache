@@ -24,7 +24,7 @@ services:
   - memcached
 
 before_script:
-  - composer update --prefer-source $PREFER_LOWEST
+  - composer update $PREFER_LOWEST
   - yes '' | pecl install -f apcu
   - echo "apc.enable_cli=1" > sabrecache.ini
   - echo "extension=memcached.so" >> sabrecache.ini
