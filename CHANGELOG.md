@@ -1,6 +1,12 @@
 ChangeLog
 =========
 
+1.0.2 (2020-10-03)
+------------------
+
+* #18 #19 #20 #21 #22: Refactor CI (@phil-davis)
+* #14: Code refactor for phpstan and add support for PHP 7.4 (@phil-davis)
+
 1.0.1 (2019-07-19)
 ------------------
 
