@@ -10,7 +10,7 @@ started. It's as hands-off as possible.
 It also comes with a test-suite that can be used by other PSR-16
 implementations.
 
-Trigger CI
+Trigger CI 2
 
 Installation
 ------------
