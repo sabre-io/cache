@@ -4,7 +4,7 @@ sabre/cache
 This repository is a simple abstraction layer for key-value caches. It
 implements [PSR-16][5].
 
-If you need a super-simply way to support PSR-16, sabre/cache helps you get
+If you need a super-simple way to support PSR-16, sabre/cache helps you get
 started. It's as hands-off as possible.
 
 It also comes with a test-suite that can be used by other PSR-16
