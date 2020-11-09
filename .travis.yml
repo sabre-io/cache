@@ -36,7 +36,7 @@ services:
   - memcached
 
 before_script:
-  - if [ $RUN_PHPCSFIXER == "FALSE" ]; then composer remove --dev friendsofphp/php-cs-fixer; fi
+  - if [ $RUN_PHPCSFIXER == "FALSE" ]; then composer remove --no-update --dev friendsofphp/php-cs-fixer; fi
   - composer update $PREFER_LOWEST
   - yes '' | pecl install -f apcu
   - echo "apc.enable_cli=1" > sabrecache.ini
