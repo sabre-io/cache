@@ -26,7 +26,7 @@ Read [PSR-16][5] for the API. We follow it to the letter.
 
 ### In-memory cache
 
-This is useful as a test-double or long running processes. The `Memory` cache
+This is useful as a test-double for long-running processes. The `Memory` cache
 only lasts as long as the object does.
 
 ```php
