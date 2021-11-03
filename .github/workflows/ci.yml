@@ -19,15 +19,20 @@ jobs:
           - php-versions: '7.1'
             coverage: 'none'
             code-analysis: 'yes'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Memcached
+        uses: KeisukeYamashita/memcached-actions@v1
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: memcached
+          extensions: memcached, apcu
+          ini-values: apc.enable_cli=1"
           coverage: ${{ matrix.coverage }}
           tools: composer
 
@@ -57,6 +62,8 @@ jobs:
 
       - name: Test with phpunit
         run: vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-clover clover.xml
+        env:
+          MEMCACHED_SERVER: 127.0.0.1
 
       - name: Code Coverage
         uses: codecov/codecov-action@v2
