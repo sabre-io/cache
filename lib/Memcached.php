@@ -12,7 +12,7 @@ use Traversable;
 /**
  * The Memcached cache uses Memcache to store values.
  *
- * This is a simple PSR-16 wrappe around memcached. To get it going, pass a
+ * This is a simple PSR-16 wrapper around memcached. To get it going, pass a
  * fully instantiated Memcached object to its constructor.
  *
  * @copyright Copyright (C) fruux GmbH (https://fruux.com/)
@@ -242,5 +242,7 @@ class Memcached implements CacheInterface
             throw new InvalidArgumentException('$keys must be iterable');
         }
         $this->memcached->deleteMulti($keys);
+
+        return true;
     }
 }
