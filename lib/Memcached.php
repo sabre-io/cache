@@ -242,5 +242,7 @@ class Memcached implements CacheInterface
             throw new InvalidArgumentException('$keys must be iterable');
         }
         $this->memcached->deleteMulti($keys);
+
+        return true;
     }
 }
