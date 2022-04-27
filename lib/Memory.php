@@ -79,12 +79,14 @@ class Memory implements CacheInterface
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
         }
-        if ($ttl instanceof DateInterval) {
-            $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
-        } elseif (is_int($ttl) || ctype_digit($ttl)) {
-            $expire = time() + $ttl;
-        } else {
-            $expire = null;
+
+        $expire = null;
+        if (isset($ttl)) {
+            if ($ttl instanceof DateInterval) {
+                $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
+            } elseif (is_int($ttl) || ctype_digit((string) $ttl)) {
+                $expire = time() + $ttl;
+            }
         }
         $this->cache[$key] = [$expire, $value];
 
