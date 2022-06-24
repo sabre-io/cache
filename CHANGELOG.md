@@ -1,6 +1,14 @@
 ChangeLog
 =========
 
+1.0.4 (2022-06-24)
+------------------
+
+* #39 check expiration time in Memory:has() (@Knochenmarc)
+* #38 fix ctype_digit() warnings (@Knochenmarc)
+* #36 Correct some minor typos (@phil-davis)
+* #29 Minor spelling correction (@sdklab007)
+
 1.0.3 (2020-10-03)
 ------------------
 
