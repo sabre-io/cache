@@ -143,6 +143,17 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $cache->has(null);
     }
 
+    public function testHasWithTtl()
+    {
+        $cache = $this->getCache();
+        $cache->set('foo', 'bar', 1);
+        $this->assertTrue($cache->has('foo'));
+
+        // Wait 2 seconds so the cache expires
+        usleep(2000000);
+        $this->assertFalse($cache->has('foo'));
+    }
+
     /**
      * @depends testSetGet
      */

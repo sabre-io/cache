@@ -41,19 +41,27 @@ class Memory implements CacheInterface
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
         }
-        if (!isset($this->cache[$key])) {
+        if (!isset($this->cache[$key]) || $this->isExpired($key)) {
             return $default;
         }
-        list($expire, $value) = $this->cache[$key];
-        if (!is_null($expire) && $expire < time()) {
-            // If a ttl was set and it expired in the past, invalidate the
-            // cache.
+
+        return $this->cache[$key][1];
+    }
+
+    /**
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    private function isExpired(string $key): bool
+    {
+        $expire = $this->cache[$key][0];
+        if (null !== $expire && $expire < time()) {
+            // If a ttl was set and it expired in the past, invalidate the cache.
             $this->delete($key);
 
-            return $default;
+            return true;
         }
 
-        return $value;
+        return false;
     }
 
     /**
@@ -147,6 +155,6 @@ class Memory implements CacheInterface
             throw new InvalidArgumentException('$key must be a string');
         }
 
-        return isset($this->cache[$key]);
+        return isset($this->cache[$key]) && !$this->isExpired($key);
     }
 }
