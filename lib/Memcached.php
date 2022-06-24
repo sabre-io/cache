@@ -80,12 +80,14 @@ class Memcached implements CacheInterface
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
         }
-        if ($ttl instanceof DateInterval) {
-            $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
-        } elseif (is_int($ttl) || ctype_digit($ttl)) {
-            $expire = time() + $ttl;
-        } else {
-            $expire = 0;
+
+        $expire = 0;
+        if (isset($ttl)) {
+            if ($ttl instanceof DateInterval) {
+                $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
+            } elseif (is_int($ttl) || ctype_digit((string) $ttl)) {
+                $expire = time() + $ttl;
+            }
         }
 
         return $this->memcached->set($key, $value, $expire);
@@ -208,12 +210,14 @@ class Memcached implements CacheInterface
         } elseif (!is_array($values)) {
             throw new InvalidArgumentException('$values must be iterable');
         }
-        if ($ttl instanceof DateInterval) {
-            $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
-        } elseif (is_int($ttl) || ctype_digit($ttl)) {
-            $expire = time() + $ttl;
-        } else {
-            $expire = 0;
+
+        $expire = 0;
+        if (isset($ttl)) {
+            if ($ttl instanceof DateInterval) {
+                $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
+            } elseif (is_int($ttl) || ctype_digit((string) $ttl)) {
+                $expire = time() + $ttl;
+            }
         }
 
         return $this->memcached->setMulti(
