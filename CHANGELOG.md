@@ -1,6 +1,11 @@
 ChangeLog
 =========
 
+2.0.0 (2022-08-23)
+------------------
+
+* #43 Drop PHP before 7.4 and add type declarations (@phil-davis)
+
 1.0.4 (2022-06-24)
 ------------------
 
