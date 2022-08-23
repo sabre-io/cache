@@ -34,7 +34,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetExpire()
+    public function testSetExpire(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
@@ -54,7 +54,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetExpireDateInterval()
+    public function testSetExpireDateInterval(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
@@ -74,7 +74,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetMultipleExpireDateIntervalExpired()
+    public function testSetMultipleExpireDateIntervalExpired(): void
     {
         $values = [
             'key1' => 'value1',
@@ -119,7 +119,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetMultipleExpireDateIntervalInt()
+    public function testSetMultipleExpireDateIntervalInt(): void
     {
         $values = [
             'key1' => 'value1',

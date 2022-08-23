@@ -14,7 +14,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 {
     abstract public function getCache(): CacheInterface;
 
-    public function testSetGet()
+    public function testSetGet(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
@@ -24,7 +24,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
@@ -33,7 +33,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($cache->get('foo'));
     }
 
-    public function testGetInvalidArg()
+    public function testGetInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
@@ -43,7 +43,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testDelete
      */
-    public function testGetNotFound()
+    public function testGetNotFound(): void
     {
         $cache = $this->getCache();
         $this->assertNull($cache->get('notfound'));
@@ -52,7 +52,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testDelete
      */
-    public function testGetNotFoundDefault()
+    public function testGetNotFoundDefault(): void
     {
         $cache = $this->getCache();
         $default = 'chickpeas';
@@ -66,7 +66,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
      * @depends testSetGet
      * @slow
      */
-    public function testSetExpire()
+    public function testSetExpire(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
@@ -81,7 +81,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
      * @depends testSetGet
      * @slow
      */
-    public function testSetExpireDateInterval()
+    public function testSetExpireDateInterval(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
@@ -92,14 +92,14 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($cache->get('foo'));
     }
 
-    public function testSetInvalidArg()
+    public function testSetInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->set(null, 'bar');
     }
 
-    public function testDeleteInvalidArg()
+    public function testDeleteInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
@@ -109,7 +109,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testClearCache()
+    public function testClearCache(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
@@ -120,7 +120,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testHas()
+    public function testHas(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
@@ -130,20 +130,20 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testHas
      */
-    public function testHasNot()
+    public function testHasNot(): void
     {
         $cache = $this->getCache();
         $this->assertFalse($cache->has('not-found'));
     }
 
-    public function testHasInvalidArg()
+    public function testHasInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->has(null);
     }
 
-    public function testHasWithTtl()
+    public function testHasWithTtl(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
@@ -157,7 +157,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testSetGetMultiple()
+    public function testSetGetMultiple(): void
     {
         $values = [
             'key1' => 'value1',
@@ -182,7 +182,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testSetGetMultipleGenerator()
+    public function testSetGetMultipleGenerator(): void
     {
         $values = [
             'key1' => 'value1',
@@ -213,7 +213,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGet
      */
-    public function testSetGetMultipleGenerator2()
+    public function testSetGetMultipleGenerator2(): void
     {
         $values = [
             'key1' => 'value1',
@@ -246,7 +246,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
      * @depends testSetExpire
      * @slow
      */
-    public function testSetMultipleExpireDateIntervalNotExpired()
+    public function testSetMultipleExpireDateIntervalNotExpired(): void
     {
         $values = [
             'key1' => 'value1',
@@ -275,7 +275,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @slow
      */
-    public function testSetMultipleExpireDateIntervalExpired()
+    public function testSetMultipleExpireDateIntervalExpired(): void
     {
         $values = [
             'key1' => 'value1',
@@ -313,7 +313,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @slow
      */
-    public function testSetMultipleExpireDateIntervalInt()
+    public function testSetMultipleExpireDateIntervalInt(): void
     {
         $values = [
             'key1' => 'value1',
@@ -348,14 +348,14 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([], $expected);
     }
 
-    public function testSetMultipleInvalidArg()
+    public function testSetMultipleInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
         $cache->setMultiple(null);
     }
 
-    public function testGetMultipleInvalidArg()
+    public function testGetMultipleInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
@@ -372,7 +372,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGetMultiple
      */
-    public function testDeleteMultipleDefaultGet()
+    public function testDeleteMultipleDefaultGet(): void
     {
         $values = [
             'key1' => 'value1',
@@ -406,7 +406,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGetMultiple
      */
-    public function testDeleteMultipleGenerator()
+    public function testDeleteMultipleGenerator(): void
     {
         $values = [
             'key1' => 'value1',
@@ -442,7 +442,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([], $expected);
     }
 
-    public function testDeleteMultipleInvalidArg()
+    public function testDeleteMultipleInvalidArg(): void
     {
         $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
         $cache = $this->getCache();
