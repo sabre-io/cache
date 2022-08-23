@@ -63,7 +63,7 @@ trait MultipleTrait
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
      *                                                   or if any of the $values are not a legal value
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         if (!is_array($values) && !$values instanceof Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
@@ -91,7 +91,7 @@ trait MultipleTrait
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         if (!is_array($keys) && !$keys instanceof Traversable) {
             throw new InvalidArgumentException('$keys must be traversable');

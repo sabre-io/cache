@@ -22,7 +22,7 @@ use Psr\SimpleCache\CacheInterface;
 class Memory implements CacheInterface
 {
     use MultipleTrait;
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * Fetches a value from the cache.
@@ -81,7 +81,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -110,7 +110,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -125,7 +125,7 @@ class Memory implements CacheInterface
      *
      * @return bool true on success and false on failure
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->cache = [];
 
@@ -143,12 +143,10 @@ class Memory implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @return bool
-     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function has($key)
+    public function has($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');

@@ -22,7 +22,7 @@ use Traversable;
 class Memcached implements CacheInterface
 {
     use MultipleTrait;
-    protected $memcached;
+    protected \Memcached $memcached;
 
     /**
      * Creates the PSR-16 Memcache implementation.
@@ -74,7 +74,7 @@ class Memcached implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -102,7 +102,7 @@ class Memcached implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -116,7 +116,7 @@ class Memcached implements CacheInterface
      *
      * @return bool true on success and false on failure
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->memcached->flush();
     }
@@ -132,12 +132,10 @@ class Memcached implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @return bool
-     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function has($key)
+    public function has($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -167,7 +165,7 @@ class Memcached implements CacheInterface
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null): iterable
     {
         if ($keys instanceof Traversable) {
             $keys = iterator_to_array($keys);
@@ -202,7 +200,7 @@ class Memcached implements CacheInterface
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
      *                                                   or if any of the $values are not a legal value
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         if ($values instanceof Traversable) {
             $values = iterator_to_array($values);
@@ -237,7 +235,7 @@ class Memcached implements CacheInterface
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         if ($keys instanceof Traversable) {
             $keys = iterator_to_array($keys);

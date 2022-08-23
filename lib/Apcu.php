@@ -63,7 +63,7 @@ class Apcu implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -86,7 +86,7 @@ class Apcu implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -100,7 +100,7 @@ class Apcu implements CacheInterface
      *
      * @return bool true on success and false on failure
      */
-    public function clear()
+    public function clear(): bool
     {
         return apcu_clear_cache();
     }
@@ -116,12 +116,10 @@ class Apcu implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @return bool
-     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function has($key)
+    public function has($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -141,7 +139,7 @@ class Apcu implements CacheInterface
      *                                      may set a default value for it or
      *                                      let the driver take care of that.
      *
-     * @return bool true on success and false on failure
+     * @return bool|array true on success and false on failure (or array of true-false)
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
@@ -170,8 +168,8 @@ class Apcu implements CacheInterface
      *
      * @param iterable $keys a list of string-based keys to be deleted
      *
-     * @return bool True if the items were successfully removed. False if there
-     *              was an error.
+     * @return bool|array True if the items were successfully removed. False if there
+     *                    was an error. (or array of true-false)
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
