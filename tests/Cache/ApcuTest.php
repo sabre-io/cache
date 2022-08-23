@@ -34,7 +34,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetExpire()
+    public function testSetExpire(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
@@ -54,7 +54,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetExpireDateInterval()
+    public function testSetExpireDateInterval(): void
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
@@ -74,7 +74,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetMultipleExpireDateIntervalExpired()
+    public function testSetMultipleExpireDateIntervalExpired(): void
     {
         $values = [
             'key1' => 'value1',
@@ -85,29 +85,29 @@ class ApcuTest extends AbstractCacheTest
         $cache = $this->getCache();
         $cache->setMultiple($values, new \DateInterval('PT1S'));
 
-        //// Wait 2 seconds so the cache expires
-        //sleep(2);
+        // // Wait 2 seconds so the cache expires
+        // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
         $this->assertTrue($result instanceof Traversable || is_array($result));
-        //$count = 0;
+        // $count = 0;
 
-        //$expected = [
+        // $expected = [
         //    'key1' => 'not-found',
         //    'key2' => 'not-found',
         //    'key3' => 'not-found',
-        //];
+        // ];
 
-        //foreach ($result as $key => $value) {
+        // foreach ($result as $key => $value) {
         //    $count++;
         //    $this->assertTrue(isset($expected[$key]));
         //    $this->assertEquals($expected[$key], $value);
         //    unset($expected[$key]);
-        //}
-        //$this->assertEquals(3, $count);
+        // }
+        // $this->assertEquals(3, $count);
 
-        //// The list of values should now be empty
-        //$this->assertEquals([], $expected);
+        // // The list of values should now be empty
+        // $this->assertEquals([], $expected);
     }
 
     /**
@@ -119,7 +119,7 @@ class ApcuTest extends AbstractCacheTest
      *
      * So this test is not complete, but that's the best we can do.
      */
-    public function testSetMultipleExpireDateIntervalInt()
+    public function testSetMultipleExpireDateIntervalInt(): void
     {
         $values = [
             'key1' => 'value1',
@@ -131,27 +131,27 @@ class ApcuTest extends AbstractCacheTest
         $cache->setMultiple($values, 1);
 
         // Wait 2 seconds so the cache expires
-        //sleep(2);
+        // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
         $this->assertTrue($result instanceof Traversable || is_array($result));
-        //$count = 0;
+        // $count = 0;
 
-        //$expected = [
+        // $expected = [
         //    'key1' => 'not-found',
         //    'key2' => 'not-found',
         //    'key3' => 'not-found',
-        //];
+        // ];
 
-        //foreach ($result as $key => $value) {
+        // foreach ($result as $key => $value) {
         //    $count++;
         //    $this->assertTrue(isset($expected[$key]));
         //    $this->assertEquals($expected[$key], $value);
         //    unset($expected[$key]);
-        //}
-        //$this->assertEquals(3, $count);
+        // }
+        // $this->assertEquals(3, $count);
 
-        //// The list of values should now be empty
-        //$this->assertEquals([], $expected);
+        // // The list of values should now be empty
+        // $this->assertEquals([], $expected);
     }
 }

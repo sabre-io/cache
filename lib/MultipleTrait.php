@@ -28,12 +28,12 @@ trait MultipleTrait
      * @param mixed    $default default value to return for keys that do not
      *                          exist
      *
+     * @return iterable A list of key => value pairs. Cache keys that do not
+     *                  exist or are stale will have $default as value.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
-     *
-     * @return iterable A list of key => value pairs. Cache keys that do not
-     *                  exist or are stale will have $default as value.
      */
     public function getMultiple($keys, $default = null)
     {
@@ -57,13 +57,13 @@ trait MultipleTrait
      *                                      may set a default value for it or
      *                                      let the driver take care of that.
      *
+     * @return bool true on success and false on failure
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
      *                                                   or if any of the $values are not a legal value
-     *
-     * @return bool true on success and false on failure
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         if (!is_array($values) && !$values instanceof Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
@@ -84,14 +84,14 @@ trait MultipleTrait
      *
      * @param iterable $keys a list of string-based keys to be deleted
      *
+     * @return bool True if the items were successfully removed. False if there
+     *              was an error.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
-     *
-     * @return bool True if the items were successfully removed. False if there
-     *              was an error.
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         if (!is_array($keys) && !$keys instanceof Traversable) {
             throw new InvalidArgumentException('$keys must be traversable');

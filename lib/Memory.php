@@ -21,9 +21,8 @@ use Psr\SimpleCache\CacheInterface;
  */
 class Memory implements CacheInterface
 {
-    protected $cache = [];
-
     use MultipleTrait;
+    protected array $cache = [];
 
     /**
      * Fetches a value from the cache.
@@ -31,10 +30,10 @@ class Memory implements CacheInterface
      * @param string $key     the unique key of this item in the cache
      * @param mixed  $default default value to return if the key does not exist
      *
+     * @return mixed the value of the item from the cache, or $default in case of cache miss
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return mixed the value of the item from the cache, or $default in case of cache miss
      */
     public function get($key, $default = null)
     {
@@ -77,12 +76,12 @@ class Memory implements CacheInterface
      *                                     a default value for it or let the
      *                                     driver take care of that.
      *
+     * @return bool true on success and false on failure
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool true on success and false on failure
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -106,12 +105,12 @@ class Memory implements CacheInterface
      *
      * @param string $key the unique cache key of the item to delete
      *
+     * @return bool True if the item was successfully removed. False if there was an error.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool True if the item was successfully removed. False if there was an error.
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -126,7 +125,7 @@ class Memory implements CacheInterface
      *
      * @return bool true on success and false on failure
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->cache = [];
 
@@ -146,10 +145,8 @@ class Memory implements CacheInterface
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool
      */
-    public function has($key)
+    public function has($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');

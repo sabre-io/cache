@@ -21,7 +21,8 @@ use Traversable;
  */
 class Memcached implements CacheInterface
 {
-    protected $memcached;
+    use MultipleTrait;
+    protected \Memcached $memcached;
 
     /**
      * Creates the PSR-16 Memcache implementation.
@@ -31,18 +32,16 @@ class Memcached implements CacheInterface
         $this->memcached = $memcached;
     }
 
-    use MultipleTrait;
-
     /**
      * Fetches a value from the cache.
      *
      * @param string $key     the unique key of this item in the cache
      * @param mixed  $default default value to return if the key does not exist
      *
+     * @return mixed the value of the item from the cache, or $default in case of cache miss
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return mixed the value of the item from the cache, or $default in case of cache miss
      */
     public function get($key, $default = null)
     {
@@ -70,12 +69,12 @@ class Memcached implements CacheInterface
      *                                     a default value for it or let the
      *                                     driver take care of that.
      *
+     * @return bool true on success and false on failure
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool true on success and false on failure
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -98,12 +97,12 @@ class Memcached implements CacheInterface
      *
      * @param string $key the unique cache key of the item to delete
      *
+     * @return bool True if the item was successfully removed. False if there was an error.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool True if the item was successfully removed. False if there was an error.
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -117,7 +116,7 @@ class Memcached implements CacheInterface
      *
      * @return bool true on success and false on failure
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->memcached->flush();
     }
@@ -135,10 +134,8 @@ class Memcached implements CacheInterface
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
-     *
-     * @return bool
      */
-    public function has($key)
+    public function has($key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -161,14 +158,14 @@ class Memcached implements CacheInterface
      * @param mixed    $default default value to return for keys that do not
      *                          exist
      *
+     * @return iterable A list of key => value pairs. Cache keys that do not
+     *                  exist or are stale will have $default as value.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
-     *
-     * @return iterable A list of key => value pairs. Cache keys that do not
-     *                  exist or are stale will have $default as value.
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null): iterable
     {
         if ($keys instanceof Traversable) {
             $keys = iterator_to_array($keys);
@@ -197,13 +194,13 @@ class Memcached implements CacheInterface
      *                                      may set a default value for it or
      *                                      let the driver take care of that.
      *
+     * @return bool true on success and false on failure
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
      *                                                   or if any of the $values are not a legal value
-     *
-     * @return bool true on success and false on failure
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         if ($values instanceof Traversable) {
             $values = iterator_to_array($values);
@@ -231,14 +228,14 @@ class Memcached implements CacheInterface
      *
      * @param iterable $keys a list of string-based keys to be deleted
      *
+     * @return bool True if the items were successfully removed. False if there
+     *              was an error.
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
-     *
-     * @return bool True if the items were successfully removed. False if there
-     *              was an error.
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         if ($keys instanceof Traversable) {
             $keys = iterator_to_array($keys);
