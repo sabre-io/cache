@@ -37,7 +37,7 @@ trait MultipleTrait
      */
     public function getMultiple($keys, $default = null)
     {
-        if (!is_array($keys) && !$keys instanceof Traversable) {
+        if (!is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException('$keys must be traversable');
         }
 
@@ -65,7 +65,7 @@ trait MultipleTrait
      */
     public function setMultiple($values, $ttl = null): bool
     {
-        if (!is_array($values) && !$values instanceof Traversable) {
+        if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
         }
 
@@ -93,7 +93,7 @@ trait MultipleTrait
      */
     public function deleteMultiple($keys): bool
     {
-        if (!is_array($keys) && !$keys instanceof Traversable) {
+        if (!is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException('$keys must be traversable');
         }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
-use Traversable;
 
 class ApcuTest extends AbstractCacheTest
 {
@@ -89,7 +88,7 @@ class ApcuTest extends AbstractCacheTest
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        $this->assertTrue($result instanceof Traversable || is_array($result));
+        $this->assertTrue($result instanceof \Traversable || is_array($result));
         // $count = 0;
 
         // $expected = [
@@ -134,7 +133,7 @@ class ApcuTest extends AbstractCacheTest
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        $this->assertTrue($result instanceof Traversable || is_array($result));
+        $this->assertTrue($result instanceof \Traversable || is_array($result));
         // $count = 0;
 
         // $expected = [

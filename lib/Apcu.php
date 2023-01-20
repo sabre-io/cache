@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sabre\Cache;
 
-use DateInterval;
-use DateTime;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 
@@ -49,14 +47,14 @@ class Apcu implements CacheInterface
      * Persists data in the cache, uniquely referenced by a key with an
      * optional expiration TTL time.
      *
-     * @param string                $key   the key of the item to store
-     * @param mixed                 $value the value of the item to store, must
-     *                                     be serializable
-     * @param int|DateInterval|null $ttl   Optional. The TTL value of this item.
-     *                                     If no value is sent and the driver
-     *                                     supports TTL then the library may set
-     *                                     a default value for it or let the
-     *                                     driver take care of that.
+     * @param string                 $key   the key of the item to store
+     * @param mixed                  $value the value of the item to store, must
+     *                                      be serializable
+     * @param int|\DateInterval|null $ttl   Optional. The TTL value of this item.
+     *                                      If no value is sent and the driver
+     *                                      supports TTL then the library may set
+     *                                      a default value for it or let the
+     *                                      driver take care of that.
      *
      * @return bool true on success and false on failure
      *
@@ -68,9 +66,9 @@ class Apcu implements CacheInterface
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
         }
-        if ($ttl instanceof DateInterval) {
+        if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
-            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
+            $ttl = (new \DateTime('now'))->add($ttl)->getTimeStamp() - time();
         }
 
         return apcu_store($key, $value, (int) $ttl);
@@ -131,13 +129,13 @@ class Apcu implements CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable              $values a list of key => value pairs for a
-     *                                      multiple-set operation
-     * @param int|DateInterval|null $ttl    Optional. The TTL value of this
-     *                                      item. If no value is sent and the
-     *                                      driver supports TTL then the library
-     *                                      may set a default value for it or
-     *                                      let the driver take care of that.
+     * @param iterable               $values a list of key => value pairs for a
+     *                                       multiple-set operation
+     * @param int|\DateInterval|null $ttl    Optional. The TTL value of this
+     *                                       item. If no value is sent and the
+     *                                       driver supports TTL then the library
+     *                                       may set a default value for it or
+     *                                       let the driver take care of that.
      *
      * @return bool|array true on success and false on failure (or array of true-false)
      *
@@ -147,16 +145,16 @@ class Apcu implements CacheInterface
      */
     public function setMultiple($values, $ttl = null)
     {
-        if (!is_array($values) && !$values instanceof Traversable) {
+        if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
         }
 
-        if ($ttl instanceof DateInterval) {
+        if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
-            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
+            $ttl = (new \DateTime('now'))->add($ttl)->getTimeStamp() - time();
         }
 
-        if ($values instanceof Traversable) {
+        if ($values instanceof \Traversable) {
             $values = iterator_to_array($values);
         }
 
@@ -177,7 +175,7 @@ class Apcu implements CacheInterface
      */
     public function deleteMultiple($keys)
     {
-        if ($keys instanceof Traversable) {
+        if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys);
         } elseif (!is_array($keys)) {
             throw new InvalidArgumentException('$keys must be iterable');
