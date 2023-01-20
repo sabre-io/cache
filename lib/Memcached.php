@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sabre\Cache;
 
-use DateInterval;
-use DateTime;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 
@@ -60,14 +58,14 @@ class Memcached implements CacheInterface
      * Persists data in the cache, uniquely referenced by a key with an
      * optional expiration TTL time.
      *
-     * @param string                $key   the key of the item to store
-     * @param mixed                 $value the value of the item to store, must
-     *                                     be serializable
-     * @param int|DateInterval|null $ttl   Optional. The TTL value of this item.
-     *                                     If no value is sent and the driver
-     *                                     supports TTL then the library may set
-     *                                     a default value for it or let the
-     *                                     driver take care of that.
+     * @param string                 $key   the key of the item to store
+     * @param mixed                  $value the value of the item to store, must
+     *                                      be serializable
+     * @param int|\DateInterval|null $ttl   Optional. The TTL value of this item.
+     *                                      If no value is sent and the driver
+     *                                      supports TTL then the library may set
+     *                                      a default value for it or let the
+     *                                      driver take care of that.
      *
      * @return bool true on success and false on failure
      *
@@ -82,8 +80,8 @@ class Memcached implements CacheInterface
 
         $expire = 0;
         if (isset($ttl)) {
-            if ($ttl instanceof DateInterval) {
-                $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
+            if ($ttl instanceof \DateInterval) {
+                $expire = (new \DateTime('now'))->add($ttl)->getTimeStamp();
             } elseif (is_int($ttl) || ctype_digit((string) $ttl)) {
                 $expire = time() + $ttl;
             }
@@ -167,7 +165,7 @@ class Memcached implements CacheInterface
      */
     public function getMultiple($keys, $default = null): iterable
     {
-        if ($keys instanceof Traversable) {
+        if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys);
         } elseif (!is_array($keys)) {
             throw new InvalidArgumentException('$keys must be iterable');
@@ -186,13 +184,13 @@ class Memcached implements CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable              $values a list of key => value pairs for a
-     *                                      multiple-set operation
-     * @param int|DateInterval|null $ttl    Optional. The TTL value of this
-     *                                      item. If no value is sent and the
-     *                                      driver supports TTL then the library
-     *                                      may set a default value for it or
-     *                                      let the driver take care of that.
+     * @param iterable               $values a list of key => value pairs for a
+     *                                       multiple-set operation
+     * @param int|\DateInterval|null $ttl    Optional. The TTL value of this
+     *                                       item. If no value is sent and the
+     *                                       driver supports TTL then the library
+     *                                       may set a default value for it or
+     *                                       let the driver take care of that.
      *
      * @return bool true on success and false on failure
      *
@@ -202,7 +200,7 @@ class Memcached implements CacheInterface
      */
     public function setMultiple($values, $ttl = null): bool
     {
-        if ($values instanceof Traversable) {
+        if ($values instanceof \Traversable) {
             $values = iterator_to_array($values);
         } elseif (!is_array($values)) {
             throw new InvalidArgumentException('$values must be iterable');
@@ -210,8 +208,8 @@ class Memcached implements CacheInterface
 
         $expire = 0;
         if (isset($ttl)) {
-            if ($ttl instanceof DateInterval) {
-                $expire = (new DateTime('now'))->add($ttl)->getTimeStamp();
+            if ($ttl instanceof \DateInterval) {
+                $expire = (new \DateTime('now'))->add($ttl)->getTimeStamp();
             } elseif (is_int($ttl) || ctype_digit((string) $ttl)) {
                 $expire = time() + $ttl;
             }
@@ -237,7 +235,7 @@ class Memcached implements CacheInterface
      */
     public function deleteMultiple($keys): bool
     {
-        if ($keys instanceof Traversable) {
+        if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys);
         } elseif (!is_array($keys)) {
             throw new InvalidArgumentException('$keys must be iterable');

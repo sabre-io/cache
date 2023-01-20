@@ -64,6 +64,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @depends testSetGet
+     *
      * @slow
      */
     public function testSetExpire(): void
@@ -79,6 +80,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @depends testSetGet
+     *
      * @slow
      */
     public function testSetExpireDateInterval(): void
@@ -244,6 +246,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testSetGetMultiple
      * @depends testSetExpire
+     *
      * @slow
      */
     public function testSetMultipleExpireDateIntervalNotExpired(): void
