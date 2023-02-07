@@ -43,9 +43,9 @@
         "psr/simple-cache-implementation": "~1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.10.0",
-        "phpstan/phpstan": "^1.8",
-        "phpunit/phpunit" : "^9.0"
+        "friendsofphp/php-cs-fixer": "^3.14.0",
+        "phpstan/phpstan": "^1.9",
+        "phpunit/phpunit" : "^9.6"
     },
     "scripts": {
         "phpstan": [
