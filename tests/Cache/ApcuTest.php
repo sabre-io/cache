@@ -11,14 +11,14 @@ class ApcuTest extends AbstractCacheTest
     public function getCache(): CacheInterface
     {
         if (!function_exists('apcu_store')) {
-            $this->markTestSkipped('Apcu extension is not loaded');
+            self::markTestSkipped('Apcu extension is not loaded');
         }
         if (!ini_get('apc.enabled')) {
-            $this->markTestSkipped('apc.enabled is set to 0. Enable it via php.ini');
+            self::markTestSkipped('apc.enabled is set to 0. Enable it via php.ini');
         }
 
         if ('cli' === php_sapi_name() && !ini_get('apc.enable_cli')) {
-            $this->markTestSkipped('apc.enable_cli is set to 0. Enable it via php.ini');
+            self::markTestSkipped('apc.enable_cli is set to 0. Enable it via php.ini');
         }
 
         return new Apcu();
