@@ -18,7 +18,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
     }
 
     /**
@@ -28,9 +28,9 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
         $cache->delete('foo');
-        $this->assertNull($cache->get('foo'));
+        self::assertNull($cache->get('foo'));
     }
 
     public function testGetInvalidArg(): void
@@ -46,7 +46,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     public function testGetNotFound(): void
     {
         $cache = $this->getCache();
-        $this->assertNull($cache->get('notfound'));
+        self::assertNull($cache->get('notfound'));
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $default = 'chickpeas';
-        $this->assertEquals(
+        self::assertEquals(
             $default,
             $cache->get('notfound', $default)
         );
@@ -71,11 +71,11 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
 
         // Wait 2 seconds so the cache expires
         usleep(2000000);
-        $this->assertNull($cache->get('foo'));
+        self::assertNull($cache->get('foo'));
     }
 
     /**
@@ -87,11 +87,11 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
 
         // Wait 2 seconds so the cache expires
         usleep(2000000);
-        $this->assertNull($cache->get('foo'));
+        self::assertNull($cache->get('foo'));
     }
 
     public function testSetInvalidArg(): void
@@ -116,7 +116,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
         $cache->clear();
-        $this->assertNull($cache->get('foo'));
+        self::assertNull($cache->get('foo'));
     }
 
     /**
@@ -126,7 +126,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar');
-        $this->assertTrue($cache->has('foo'));
+        self::assertTrue($cache->has('foo'));
     }
 
     /**
@@ -135,7 +135,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     public function testHasNot(): void
     {
         $cache = $this->getCache();
-        $this->assertFalse($cache->has('not-found'));
+        self::assertFalse($cache->has('not-found'));
     }
 
     public function testHasInvalidArg(): void
@@ -149,11 +149,11 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
-        $this->assertTrue($cache->has('foo'));
+        self::assertTrue($cache->has('foo'));
 
         // Wait 2 seconds so the cache expires
         usleep(2000000);
-        $this->assertFalse($cache->has('foo'));
+        self::assertFalse($cache->has('foo'));
     }
 
     /**
@@ -172,13 +172,13 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
         $result = $cache->getMultiple(array_keys($values));
         foreach ($result as $key => $value) {
-            $this->assertTrue(isset($values[$key]));
-            $this->assertEquals($values[$key], $value);
+            self::assertTrue(isset($values[$key]));
+            self::assertEquals($values[$key], $value);
             unset($values[$key]);
         }
 
         // The list of values should now be empty
-        $this->assertEquals([], $values);
+        self::assertEquals([], $values);
     }
 
     /**
@@ -203,13 +203,13 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
         $result = $cache->getMultiple(array_keys($values));
         foreach ($result as $key => $value) {
-            $this->assertTrue(isset($values[$key]));
-            $this->assertEquals($values[$key], $value);
+            self::assertTrue(isset($values[$key]));
+            self::assertEquals($values[$key], $value);
             unset($values[$key]);
         }
 
         // The list of values should now be empty
-        $this->assertEquals([], $values);
+        self::assertEquals([], $values);
     }
 
     /**
@@ -234,13 +234,13 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
         $result = $cache->getMultiple($gen());
         foreach ($result as $key => $value) {
-            $this->assertTrue(isset($values[$key]));
-            $this->assertEquals($values[$key], $value);
+            self::assertTrue(isset($values[$key]));
+            self::assertEquals($values[$key], $value);
             unset($values[$key]);
         }
 
         // The list of values should now be empty
-        $this->assertEquals([], $values);
+        self::assertEquals([], $values);
     }
 
     /**
@@ -265,14 +265,14 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         $count = 0;
         foreach ($result as $key => $value) {
             ++$count;
-            $this->assertTrue(isset($values[$key]));
-            $this->assertEquals($values[$key], $value);
+            self::assertTrue(isset($values[$key]));
+            self::assertEquals($values[$key], $value);
             unset($values[$key]);
         }
-        $this->assertEquals(3, $count);
+        self::assertEquals(3, $count);
 
         // The list of values should now be empty
-        $this->assertEquals([], $values);
+        self::assertEquals([], $values);
     }
 
     /**
@@ -303,14 +303,14 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
         foreach ($result as $key => $value) {
             ++$count;
-            $this->assertTrue(isset($expected[$key]));
-            $this->assertEquals($expected[$key], $value);
+            self::assertTrue(isset($expected[$key]));
+            self::assertEquals($expected[$key], $value);
             unset($expected[$key]);
         }
-        $this->assertEquals(3, $count);
+        self::assertEquals(3, $count);
 
         // The list of values should now be empty
-        $this->assertEquals([], $expected);
+        self::assertEquals([], $expected);
     }
 
     /**
@@ -341,14 +341,14 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
 
         foreach ($result as $key => $value) {
             ++$count;
-            $this->assertTrue(isset($expected[$key]));
-            $this->assertEquals($expected[$key], $value);
+            self::assertTrue(isset($expected[$key]));
+            self::assertEquals($expected[$key], $value);
             unset($expected[$key]);
         }
-        $this->assertEquals(3, $count);
+        self::assertEquals(3, $count);
 
         // The list of values should now be empty
-        $this->assertEquals([], $expected);
+        self::assertEquals([], $expected);
     }
 
     public function testSetMultipleInvalidArg(): void
@@ -397,13 +397,13 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         ];
 
         foreach ($result as $key => $value) {
-            $this->assertTrue(isset($expected[$key]));
-            $this->assertEquals($expected[$key], $value);
+            self::assertTrue(isset($expected[$key]));
+            self::assertEquals($expected[$key], $value);
             unset($expected[$key]);
         }
 
         // The list of values should now be empty
-        $this->assertEquals([], $expected);
+        self::assertEquals([], $expected);
     }
 
     /**
@@ -436,13 +436,13 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         ];
 
         foreach ($result as $key => $value) {
-            $this->assertTrue(isset($expected[$key]));
-            $this->assertEquals($expected[$key], $value);
+            self::assertTrue(isset($expected[$key]));
+            self::assertEquals($expected[$key], $value);
             unset($expected[$key]);
         }
 
         // The list of values should now be empty
-        $this->assertEquals([], $expected);
+        self::assertEquals([], $expected);
     }
 
     public function testDeleteMultipleInvalidArg(): void
