@@ -37,11 +37,11 @@ class ApcuTest extends AbstractCacheTest
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', 1);
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
 
         // Wait 2 seconds so the cache expires
         // usleep(2000000);
-        // $this->assertNull($cache->get('foo'));
+        // self::assertNull($cache->get('foo'));
     }
 
     /**
@@ -57,11 +57,11 @@ class ApcuTest extends AbstractCacheTest
     {
         $cache = $this->getCache();
         $cache->set('foo', 'bar', new \DateInterval('PT1S'));
-        $this->assertEquals('bar', $cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo'));
 
         // Wait 2 seconds so the cache expires
         // usleep(2000000);
-        // $this->assertNull($cache->get('foo'));
+        // self::assertNull($cache->get('foo'));
     }
 
     /**
@@ -88,7 +88,7 @@ class ApcuTest extends AbstractCacheTest
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        $this->assertTrue($result instanceof \Traversable || is_array($result));
+        self::assertTrue($result instanceof \Traversable || is_array($result));
         // $count = 0;
 
         // $expected = [
@@ -99,14 +99,14 @@ class ApcuTest extends AbstractCacheTest
 
         // foreach ($result as $key => $value) {
         //    $count++;
-        //    $this->assertTrue(isset($expected[$key]));
-        //    $this->assertEquals($expected[$key], $value);
+        //    self::assertTrue(isset($expected[$key]));
+        //    self::assertEquals($expected[$key], $value);
         //    unset($expected[$key]);
         // }
-        // $this->assertEquals(3, $count);
+        // self::assertEquals(3, $count);
 
         // // The list of values should now be empty
-        // $this->assertEquals([], $expected);
+        // self::assertEquals([], $expected);
     }
 
     /**
@@ -133,7 +133,7 @@ class ApcuTest extends AbstractCacheTest
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        $this->assertTrue($result instanceof \Traversable || is_array($result));
+        self::assertTrue($result instanceof \Traversable || is_array($result));
         // $count = 0;
 
         // $expected = [
@@ -144,13 +144,13 @@ class ApcuTest extends AbstractCacheTest
 
         // foreach ($result as $key => $value) {
         //    $count++;
-        //    $this->assertTrue(isset($expected[$key]));
-        //    $this->assertEquals($expected[$key], $value);
+        //    self::assertTrue(isset($expected[$key]));
+        //    self::assertEquals($expected[$key], $value);
         //    unset($expected[$key]);
         // }
-        // $this->assertEquals(3, $count);
+        // self::assertEquals(3, $count);
 
         // // The list of values should now be empty
-        // $this->assertEquals([], $expected);
+        // self::assertEquals([], $expected);
     }
 }
