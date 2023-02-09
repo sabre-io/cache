@@ -36,7 +36,7 @@ class Memcached implements CacheInterface
      * @param string $key     the unique key of this item in the cache
      * @param mixed  $default default value to return if the key does not exist
      *
-     * @return mixed the value of the item from the cache, or $default in case of cache miss
+     * @return mixed the value of the item from the cache, or $default in case of cache miss, or false if anything else is wrong
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
