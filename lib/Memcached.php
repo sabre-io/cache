@@ -47,8 +47,21 @@ class Memcached implements CacheInterface
             throw new InvalidArgumentException('$key must be a string');
         }
         $result = $this->memcached->get($key);
-        if (false === $result && \Memcached::RES_NOTFOUND === $this->memcached->getResultCode()) {
-            return $default;
+        if (false === $result) {
+            // Note: result can be false because the key exists and has the value boolean false,
+            //       or because something went wrong (cache miss, memcached server timeout...)
+            // So we need to check the result code to work out what to do.
+            $resultCode = $this->memcached->getResultCode();
+            if (\Memcached::RES_BAD_KEY_PROVIDED === $resultCode) {
+                // The key was a string but is invalid. Maybe it was too long, contained whitespace etc.
+                throw new InvalidArgumentException('$key was not valid');
+            }
+            if (\Memcached::RES_SUCCESS !== $resultCode) {
+                // The result might have been RES_NOTFOUND, or some other problem looking up the key.
+                // The memcached server might be down or...
+                // In any of these cases we want to return the specified default.
+                return $default;
+            }
         }
 
         return $result;

@@ -23,4 +23,11 @@ class MemcachedTest extends AbstractCacheTest
 
         return new Memcached($memcached);
     }
+
+    public function testGetWithWhitespaceInKey(): void
+    {
+        $this->expectException(\Psr\SimpleCache\InvalidArgumentException::class);
+        $cache = $this->getCache();
+        $cache->get('contains white space');
+    }
 }
