@@ -1,6 +1,11 @@
 ChangeLog
 =========
 
+2.0.1 (2023-02-09)
+------------------
+
+* #53 Check memcached get resultCode more closely (@phil-davis)
+
 2.0.0 (2022-08-23)
 ------------------
 
