@@ -33,7 +33,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -79,7 +79,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -108,7 +108,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -144,7 +144,7 @@ class Memory implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function has($key): bool
+    public function has(string $key): bool
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');

@@ -35,7 +35,7 @@ trait MultipleTrait
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
         if (!is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException('$keys must be traversable');

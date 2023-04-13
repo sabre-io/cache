@@ -29,7 +29,7 @@ class Apcu implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
@@ -143,7 +143,7 @@ class Apcu implements CacheInterface
      *                                                   MUST be thrown if $values is neither an array nor a Traversable,
      *                                                   or if any of the $values are not a legal value
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
     {
         if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
@@ -173,7 +173,7 @@ class Apcu implements CacheInterface
      *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
      *                                                   or if any of the $keys are not a legal value
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple(iterable $keys): bool
     {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys);

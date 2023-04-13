@@ -41,7 +41,7 @@ class Memcached implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *                                                   MUST be thrown if the $key string is not a legal value
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         if (!is_string($key)) {
             throw new InvalidArgumentException('$key must be a string');
