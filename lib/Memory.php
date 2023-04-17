@@ -25,19 +25,16 @@ class Memory implements CacheInterface
     /**
      * Fetches a value from the cache.
      *
-     * @param string $key     the unique key of this item in the cache
-     * @param mixed  $default default value to return if the key does not exist
+     * @param string $key     The unique key of this item in the cache.
+     * @param mixed  $default Default value to return if the key does not exist.
      *
-     * @return mixed the value of the item from the cache, or $default in case of cache miss
+     * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
         if (!isset($this->cache[$key]) || $this->isExpired($key)) {
             return $default;
         }
@@ -62,29 +59,21 @@ class Memory implements CacheInterface
     }
 
     /**
-     * Persists data in the cache, uniquely referenced by a key with an
-     * optional expiration TTL time.
+     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                        $key   the key of the item to store
-     * @param mixed                         $value the value of the item to store, must
-     *                                             be serializable
-     * @param int|string|\DateInterval|null $ttl   Optional. The TTL value of this item.
-     *                                             If no value is sent and the driver
-     *                                             supports TTL then the library may set
-     *                                             a default value for it or let the
-     *                                             driver take care of that.
+     * @param string                 $key   The key of the item to store.
+     * @param mixed                  $value The value of the item to store, must be serializable.
+     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
+     *                                      the driver supports TTL then the library may set a default value
+     *                                      for it or let the driver take care of that.
      *
-     * @return bool true on success and false on failure
+     * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
-
         $expire = null;
         if (isset($ttl)) {
             if ($ttl instanceof \DateInterval) {
@@ -101,18 +90,15 @@ class Memory implements CacheInterface
     /**
      * Delete an item from the cache by its unique key.
      *
-     * @param string $key the unique cache key of the item to delete
+     * @param string $key The unique cache key of the item to delete.
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
         unset($this->cache[$key]);
 
         return true;
@@ -121,7 +107,7 @@ class Memory implements CacheInterface
     /**
      * Wipes clean the entire cache's keys.
      *
-     * @return bool true on success and false on failure
+     * @return bool True on success and false on failure.
      */
     public function clear(): bool
     {
@@ -133,23 +119,20 @@ class Memory implements CacheInterface
     /**
      * Determines whether an item is present in the cache.
      *
-     * NOTE: It is recommended that has() is only to be used for cache warming
-     * type purposes and not to be used within your live applications operations
-     * for get/set, as this method is subject to a race condition where your
-     * has() will return true and immediately after, another script can remove
-     * it making the state of your app out of date.
+     * NOTE: It is recommended that has() is only to be used for cache warming type purposes
+     * and not to be used within your live applications operations for get/set, as this method
+     * is subject to a race condition where your has() will return true and immediately after,
+     * another script can remove it making the state of your app out of date.
      *
-     * @param string $key the cache item key
+     * @param string $key The cache item key.
+     *
+     * @return bool
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function has($key): bool
+    public function has(string $key): bool
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
-
         return isset($this->cache[$key]) && !$this->isExpired($key);
     }
 }
