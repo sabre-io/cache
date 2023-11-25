@@ -21,20 +21,16 @@ class Apcu implements CacheInterface
     /**
      * Fetches a value from the cache.
      *
-     * @param string $key     the unique key of this item in the cache
-     * @param mixed  $default default value to return if the key does not exist
+     * @param string $key     The unique key of this item in the cache.
+     * @param mixed  $default Default value to return if the key does not exist.
      *
-     * @return mixed the value of the item from the cache, or $default in case of cache miss
+     * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
-
         $value = apcu_fetch($key, $success);
         if (!$success) {
             return $default;
@@ -44,28 +40,21 @@ class Apcu implements CacheInterface
     }
 
     /**
-     * Persists data in the cache, uniquely referenced by a key with an
-     * optional expiration TTL time.
+     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                 $key   the key of the item to store
-     * @param mixed                  $value the value of the item to store, must
-     *                                      be serializable
-     * @param int|\DateInterval|null $ttl   Optional. The TTL value of this item.
-     *                                      If no value is sent and the driver
-     *                                      supports TTL then the library may set
-     *                                      a default value for it or let the
-     *                                      driver take care of that.
+     * @param string                 $key   The key of the item to store.
+     * @param mixed                  $value The value of the item to store, must be serializable.
+     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
+     *                                      the driver supports TTL then the library may set a default value
+     *                                      for it or let the driver take care of that.
      *
-     * @return bool true on success and false on failure
+     * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     *   MUST be thrown if the $key string is not a legal value.
      */
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('$key must be a string');
-        }
         if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
             $ttl = (new \DateTime('now'))->add($ttl)->getTimeStamp() - time();
@@ -129,21 +118,18 @@ class Apcu implements CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable               $values a list of key => value pairs for a
-     *                                       multiple-set operation
-     * @param int|\DateInterval|null $ttl    Optional. The TTL value of this
-     *                                       item. If no value is sent and the
-     *                                       driver supports TTL then the library
-     *                                       may set a default value for it or
-     *                                       let the driver take care of that.
+     * @param iterable               $values A list of key => value pairs for a multiple-set operation.
+     * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
+     *                                       the driver supports TTL then the library may set a default value
+     *                                       for it or let the driver take care of that.
      *
-     * @return bool|array true on success and false on failure (or array of true-false)
+     * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $values is neither an array nor a Traversable,
-     *                                                   or if any of the $values are not a legal value
+     *   MUST be thrown if $values is neither an array nor a Traversable,
+     *   or if any of the $values are not a legal value.
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
     {
         if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
@@ -164,16 +150,15 @@ class Apcu implements CacheInterface
     /**
      * Deletes multiple cache items in a single operation.
      *
-     * @param iterable $keys a list of string-based keys to be deleted
+     * @param iterable<string> $keys A list of string-based keys to be deleted.
      *
-     * @return bool|array True if the items were successfully removed. False if there
-     *                    was an error. (or array of true-false)
+     * @return bool True if the items were successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value
+     *   MUST be thrown if $keys is neither an array nor a Traversable,
+     *   or if any of the $keys are not a legal value.
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple(iterable $keys): bool
     {
         if ($keys instanceof \Traversable) {
             $keys = iterator_to_array($keys);
