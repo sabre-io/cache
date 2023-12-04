@@ -367,7 +367,7 @@ abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
         // first value is requested.
         //
         // This extra line is just a precaution for that
-        if ($result instanceof \Traversable) {
+        if ($result instanceof \Generator) {
             $result->current();
         }
     }

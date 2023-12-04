@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
-use Traversable;
 
 /**
  * The Memcached cache uses Memcache to store values.
@@ -38,8 +37,8 @@ class Memcached implements CacheInterface
      *
      * @return mixed the value of the item from the cache, or $default in case of cache miss
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function get($key, $default = null)
     {
@@ -82,8 +81,8 @@ class Memcached implements CacheInterface
      *
      * @return bool true on success and false on failure
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -94,7 +93,7 @@ class Memcached implements CacheInterface
         $expire = 0;
         if (isset($ttl)) {
             if ($ttl instanceof \DateInterval) {
-                $expire = (new \DateTime('now'))->add($ttl)->getTimeStamp();
+                $expire = (new \DateTime('now'))->add($ttl)->getTimestamp();
             } elseif (is_int($ttl) || (is_string($ttl) && ctype_digit($ttl))) {
                 $expire = time() + $ttl;
             }
@@ -110,8 +109,8 @@ class Memcached implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function delete($key): bool
     {
@@ -143,8 +142,8 @@ class Memcached implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function has($key): bool
     {
@@ -172,9 +171,9 @@ class Memcached implements CacheInterface
      * @return iterable A list of key => value pairs. Cache keys that do not
      *                  exist or are stale will have $default as value.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if $keys is neither an array nor a Traversable,
+     *                                  or if any of the $keys are not a legal value
      */
     public function getMultiple($keys, $default = null): iterable
     {
@@ -207,9 +206,9 @@ class Memcached implements CacheInterface
      *
      * @return bool true on success and false on failure
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $values is neither an array nor a Traversable,
-     *                                                   or if any of the $values are not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if $values is neither an array nor a Traversable,
+     *                                  or if any of the $values are not a legal value
      */
     public function setMultiple($values, $ttl = null): bool
     {
@@ -222,7 +221,7 @@ class Memcached implements CacheInterface
         $expire = 0;
         if (isset($ttl)) {
             if ($ttl instanceof \DateInterval) {
-                $expire = (new \DateTime('now'))->add($ttl)->getTimeStamp();
+                $expire = (new \DateTime('now'))->add($ttl)->getTimestamp();
             } elseif (is_int($ttl) || (is_string($ttl) && ctype_digit($ttl))) {
                 $expire = time() + $ttl;
             }
@@ -242,9 +241,9 @@ class Memcached implements CacheInterface
      * @return bool True if the items were successfully removed. False if there
      *              was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if $keys is neither an array nor a Traversable,
+     *                                  or if any of the $keys are not a legal value
      */
     public function deleteMultiple($keys): bool
     {

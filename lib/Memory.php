@@ -30,8 +30,8 @@ class Memory implements CacheInterface
      *
      * @return mixed the value of the item from the cache, or $default in case of cache miss
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function get($key, $default = null)
     {
@@ -46,7 +46,7 @@ class Memory implements CacheInterface
     }
 
     /**
-     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function isExpired(string $key): bool
     {
@@ -76,8 +76,8 @@ class Memory implements CacheInterface
      *
      * @return bool true on success and false on failure
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -88,7 +88,7 @@ class Memory implements CacheInterface
         $expire = null;
         if (isset($ttl)) {
             if ($ttl instanceof \DateInterval) {
-                $expire = (new \DateTime('now'))->add($ttl)->getTimeStamp();
+                $expire = (new \DateTime('now'))->add($ttl)->getTimestamp();
             } elseif (is_int($ttl) || (is_string($ttl) && ctype_digit($ttl))) {
                 $expire = time() + $ttl;
             }
@@ -105,8 +105,8 @@ class Memory implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function delete($key): bool
     {
@@ -141,8 +141,8 @@ class Memory implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function has($key): bool
     {

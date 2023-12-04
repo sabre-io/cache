@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
-use Traversable;
 
 /**
  * The Apcu Cache uses the apcu_* functions from PHP to manage the cache.
@@ -26,8 +25,8 @@ class Apcu implements CacheInterface
      *
      * @return mixed the value of the item from the cache, or $default in case of cache miss
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function get($key, $default = null)
     {
@@ -58,8 +57,8 @@ class Apcu implements CacheInterface
      *
      * @return bool true on success and false on failure
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -68,7 +67,7 @@ class Apcu implements CacheInterface
         }
         if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
-            $ttl = (new \DateTime('now'))->add($ttl)->getTimeStamp() - time();
+            $ttl = (new \DateTime('now'))->add($ttl)->getTimestamp() - time();
         }
 
         return apcu_store($key, $value, (int) $ttl);
@@ -81,8 +80,8 @@ class Apcu implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function delete($key): bool
     {
@@ -114,8 +113,8 @@ class Apcu implements CacheInterface
      *
      * @param string $key the cache item key
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if the $key string is not a legal value
      */
     public function has($key): bool
     {
@@ -139,9 +138,9 @@ class Apcu implements CacheInterface
      *
      * @return bool|array true on success and false on failure (or array of true-false)
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $values is neither an array nor a Traversable,
-     *                                                   or if any of the $values are not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if $values is neither an array nor a Traversable,
+     *                                  or if any of the $values are not a legal value
      */
     public function setMultiple($values, $ttl = null)
     {
@@ -151,7 +150,7 @@ class Apcu implements CacheInterface
 
         if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
-            $ttl = (new \DateTime('now'))->add($ttl)->getTimeStamp() - time();
+            $ttl = (new \DateTime('now'))->add($ttl)->getTimestamp() - time();
         }
 
         if ($values instanceof \Traversable) {
@@ -169,9 +168,9 @@ class Apcu implements CacheInterface
      * @return bool|array True if the items were successfully removed. False if there
      *                    was an error. (or array of true-false)
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value
+     * @throws InvalidArgumentException
+     *                                  MUST be thrown if $keys is neither an array nor a Traversable,
+     *                                  or if any of the $keys are not a legal value
      */
     public function deleteMultiple($keys)
     {
