@@ -22,7 +22,7 @@ jobs:
             code-style: 'yes'
             code-analysis: 'yes'
           - php-versions: '8.4'
-            coverage: 'none'
+            coverage: 'pcov'
             code-style: 'yes'
             code-analysis: 'yes'
 

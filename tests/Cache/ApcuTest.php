@@ -6,7 +6,7 @@ namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
-class ApcuTest extends AbstractCacheTest
+class ApcuTest extends AbstractCacheTestClass
 {
     public function getCache(): CacheInterface
     {

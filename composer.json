@@ -48,7 +48,7 @@
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
         "phpstan/extension-installer": "^1.4",
-        "phpunit/phpunit" : "^9.6"
+        "phpunit/phpunit" : "^9.6|^10.5"
     },
     "scripts": {
         "phpstan": [
