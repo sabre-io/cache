@@ -10,7 +10,7 @@ use Psr\SimpleCache\CacheInterface;
  * Because all cache implementations should mostly behave the same way, they
  * can all extend this test.
  */
-abstract class AbstractCacheTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
 {
     abstract public function getCache(): CacheInterface;
 
