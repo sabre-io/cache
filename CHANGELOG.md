@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+2.0.2 (2024-08-27)
+------------------
+
+* #61 cleanup code for phpstan level 2 (@phil-davis)
+* #67 remove unused bin directory (@phil-davis)
+* #69 add PHP 8.4 to CI (@phil-davis)
+
 2.0.1 (2023-02-09)
 ------------------
 

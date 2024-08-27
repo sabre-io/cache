@@ -43,8 +43,8 @@
         "psr/simple-cache-implementation": "~1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.60",
-        "phpstan/phpstan": "^1.11",
+        "friendsofphp/php-cs-fixer": "^3.63",
+        "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
         "phpstan/extension-installer": "^1.4",
@@ -55,7 +55,7 @@
             "phpstan analyse lib tests"
         ],
         "cs-fixer": [
-            "php-cs-fixer fix"
+            "PHP_CS_FIXER_IGNORE_ENV=true php-cs-fixer fix"
         ],
         "phpunit": [
             "phpunit --configuration tests/phpunit.xml"
