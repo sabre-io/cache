@@ -136,13 +136,13 @@ class Apcu implements CacheInterface
      *                                       may set a default value for it or
      *                                       let the driver take care of that.
      *
-     * @return bool|array true on success and false on failure (or array of true-false)
+     * @return bool true on success and false on failure
      *
      * @throws InvalidArgumentException
      *                                  MUST be thrown if $values is neither an array nor a Traversable,
      *                                  or if any of the $values are not a legal value
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException('$values must be traversable');
@@ -157,7 +157,17 @@ class Apcu implements CacheInterface
             $values = iterator_to_array($values);
         }
 
-        return apcu_store($values, null, (int) $ttl);
+        $result = apcu_store($values, null, (int) $ttl);
+
+        if (is_array($result)) {
+            // An array with no elements means the store worked.
+            // If there are any elements in the array, then something went wrong.
+            // All we can do is return false.
+            // setMultiple only allows a single true/false to be returned.
+            return 0 === \count($result);
+        }
+
+        return $result;
     }
 
     /**
@@ -165,8 +175,8 @@ class Apcu implements CacheInterface
      *
      * @param iterable $keys a list of string-based keys to be deleted
      *
-     * @return bool|array True if the items were successfully removed. False if there
-     *                    was an error. (or array of true-false)
+     * @return bool True if the items were successfully removed.
+     *              False if there was an error.
      *
      * @throws InvalidArgumentException
      *                                  MUST be thrown if $keys is neither an array nor a Traversable,
@@ -180,6 +190,16 @@ class Apcu implements CacheInterface
             throw new InvalidArgumentException('$keys must be iterable');
         }
 
-        return apcu_delete($keys);
+        $result = apcu_delete($keys);
+
+        if (is_array($result)) {
+            // An array with no elements means the delete worked.
+            // If there are any elements in the array, then something went wrong.
+            // All we can do is return false.
+            // deleteMultiple only allows a single true/false to be returned.
+            return 0 === \count($result);
+        }
+
+        return $result;
     }
 }
