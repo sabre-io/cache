@@ -6,7 +6,7 @@ namespace Sabre\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
-class MemcachedTest extends AbstractCacheTest
+class MemcachedTest extends AbstractCacheTestClass
 {
     public function getCache(): CacheInterface
     {
