@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Memcached
         uses: KeisukeYamashita/memcached-actions@v1
@@ -72,5 +72,5 @@ jobs:
           MEMCACHED_SERVER: 127.0.0.1
 
       - name: Code Coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: matrix.coverage != 'none'
