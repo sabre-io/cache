@@ -88,7 +88,7 @@ class ApcuTest extends AbstractCacheTestClass
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        self::assertTrue($result instanceof \Traversable || is_array($result));
+        self::assertTrue(is_iterable($result));
         // $count = 0;
 
         // $expected = [
@@ -133,7 +133,7 @@ class ApcuTest extends AbstractCacheTestClass
         // sleep(2);
 
         $result = $cache->getMultiple(array_keys($values), 'not-found');
-        self::assertTrue($result instanceof \Traversable || is_array($result));
+        self::assertTrue(is_iterable($result));
         // $count = 0;
 
         // $expected = [
