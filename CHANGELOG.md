@@ -1,6 +1,11 @@
 ChangeLog
 =========
 
+2.0.3 (2026-04-02)
+------------------
+
+* #62 setMultiple and deleteMultiple must only return boolean (@phil-davis)
+
 2.0.2 (2024-08-27)
 ------------------
 
