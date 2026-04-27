@@ -79,5 +79,5 @@ jobs:
           MEMCACHED_SERVER: 127.0.0.1
 
       - name: Code Coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         if: matrix.coverage != 'none'
