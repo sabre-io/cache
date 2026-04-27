@@ -19,14 +19,12 @@ use Psr\SimpleCache\CacheInterface;
 class Memcached implements CacheInterface
 {
     use MultipleTrait;
-    protected \Memcached $memcached;
 
     /**
      * Creates the PSR-16 Memcache implementation.
      */
-    public function __construct(\Memcached $memcached)
+    public function __construct(protected \Memcached $memcached)
     {
-        $this->memcached = $memcached;
     }
 
     /**
