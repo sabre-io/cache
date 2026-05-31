@@ -2,6 +2,7 @@
 
 namespace Sabre\Cache;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -21,9 +22,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertEquals('bar', $cache->get('foo'));
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testDelete(): void
     {
         $cache = $this->getCache();
@@ -40,18 +39,14 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         $cache->get(null);
     }
 
-    /**
-     * @depends testDelete
-     */
+    #[Depends('testDelete')]
     public function testGetNotFound(): void
     {
         $cache = $this->getCache();
         self::assertNull($cache->get('notfound'));
     }
 
-    /**
-     * @depends testDelete
-     */
+    #[Depends('testDelete')]
     public function testGetNotFoundDefault(): void
     {
         $cache = $this->getCache();
@@ -63,10 +58,9 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @depends testSetGet
-     *
      * @slow
      */
+    #[Depends('testSetGet')]
     public function testSetExpire(): void
     {
         $cache = $this->getCache();
@@ -79,10 +73,9 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @depends testSetGet
-     *
      * @slow
      */
+    #[Depends('testSetGet')]
     public function testSetExpireDateInterval(): void
     {
         $cache = $this->getCache();
@@ -108,9 +101,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         $cache->delete(null);
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testClearCache(): void
     {
         $cache = $this->getCache();
@@ -119,9 +110,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertNull($cache->get('foo'));
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testHas(): void
     {
         $cache = $this->getCache();
@@ -129,9 +118,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertTrue($cache->has('foo'));
     }
 
-    /**
-     * @depends testHas
-     */
+    #[Depends('testHas')]
     public function testHasNot(): void
     {
         $cache = $this->getCache();
@@ -156,9 +143,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertFalse($cache->has('foo'));
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testSetGetMultiple(): void
     {
         $values = [
@@ -181,9 +166,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $values);
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testSetGetMultipleGenerator(): void
     {
         $values = [
@@ -212,9 +195,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $values);
     }
 
-    /**
-     * @depends testSetGet
-     */
+    #[Depends('testSetGet')]
     public function testSetGetMultipleGenerator2(): void
     {
         $values = [
@@ -244,11 +225,10 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @depends testSetGetMultiple
-     * @depends testSetExpire
-     *
      * @slow
      */
+    #[Depends('testSetExpire')]
+    #[Depends('testSetGetMultiple')]
     public function testSetMultipleExpireDateIntervalNotExpired(): void
     {
         $values = [
@@ -372,9 +352,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @depends testSetGetMultiple
-     */
+    #[Depends('testSetGetMultiple')]
     public function testDeleteMultipleDefaultGet(): void
     {
         $values = [
@@ -406,9 +384,7 @@ abstract class AbstractCacheTestClass extends \PHPUnit\Framework\TestCase
         self::assertEquals([], $expected);
     }
 
-    /**
-     * @depends testSetGetMultiple
-     */
+    #[Depends('testSetGetMultiple')]
     public function testDeleteMultipleGenerator(): void
     {
         $values = [
