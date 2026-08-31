@@ -28,6 +28,11 @@ jobs:
             code-style: 'yes'
             code-analysis: 'yes'
             rector-check: 'yes'
+          - php-versions: '8.6'
+            coverage: 'pcov'
+            code-style: 'yes'
+            code-analysis: 'yes'
+            rector-check: 'yes'
 
     steps:
       - name: Checkout
