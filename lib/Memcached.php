@@ -183,9 +183,7 @@ class Memcached implements CacheInterface
 
         $result = $this->memcached->getMulti($keys);
         foreach ($keys as $key) {
-            if (!isset($result[$key])) {
-                $result[$key] = $default;
-            }
+            $result[$key] ??= $default;
         }
 
         return $result;
